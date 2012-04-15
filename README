@@ -1,0 +1,13 @@
+== Description ==         
+This demo shows how to create dynamic and modular web applications with server-side OSGi and Vaadin
+
+== Setup ==
+Import all projects in Eclipse
+Open project com.siemens.ct.osgi.vaadin.target
+Open vaadin.target
+Set the target platform
+Run existing launch config: OSGi Vaadin Demo
+
+== License ==
+All Source Code Files are licensed with the Eclipse Public License - v 1.0
+http://www.eclipse.org/legal/epl-v10.html
