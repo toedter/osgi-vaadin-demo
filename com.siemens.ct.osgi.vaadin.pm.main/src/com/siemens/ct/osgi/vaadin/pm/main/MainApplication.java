@@ -35,6 +35,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -46,13 +47,13 @@ public class MainApplication extends Application {
 	private final Logger logger = LoggerFactory.getLogger(MainApplication.class);
 
 	private final List<IViewContribution> viewContributions = Collections
-	      .synchronizedList(new ArrayList<IViewContribution>());
+			.synchronizedList(new ArrayList<IViewContribution>());
 	private final List<IActionContribution> actionContributions = Collections
-	      .synchronizedList(new ArrayList<IActionContribution>());
+			.synchronizedList(new ArrayList<IActionContribution>());
 	private final Map<IActionContribution, Button> buttonActionMap = Collections
-	      .synchronizedMap(new HashMap<IActionContribution, Button>());
+			.synchronizedMap(new HashMap<IActionContribution, Button>());
 	private final Map<IActionContribution, MenuItem> menuActionMap = Collections
-	      .synchronizedMap(new HashMap<IActionContribution, MenuItem>());
+			.synchronizedMap(new HashMap<IActionContribution, MenuItem>());
 
 	private Window main;
 	private VerticalLayout mainLayout;
@@ -96,14 +97,25 @@ public class MainApplication extends Application {
 		mainLayout.setExpandRatio(margin, 1);
 
 		for (IViewContribution viewContribution : viewContributions) {
-			tabSheet.addTab(viewContribution.getView(this),
-			      viewContribution.getName(),
-			      new ThemeResource(viewContribution.getIcon()));
+			tabSheet.addTab(viewContribution.getView(this), viewContribution.getName(), new ThemeResource(
+					viewContribution.getIcon()));
 		}
 
 		for (IActionContribution actionContribution : actionContributions) {
 			addActionContribution(actionContribution);
 		}
+
+		// Create the indicator
+		// this is used for a simple poll mechanism
+		// so that manual server-side starting/stopping of bundles has a direct
+		// effect on the client UI
+		ProgressIndicator indicator = new ProgressIndicator();
+		// Set polling frequency to 1 seconds.
+		indicator.setPollingInterval(1000);
+		// Add it to Application's main window
+		main.addComponent(indicator);
+		// Hide the component does not work...
+		indicator.setVisible(true);
 
 		initialized = true;
 	}
@@ -144,7 +156,7 @@ public class MainApplication extends Application {
 		H2 title = new H2("Dynamic Vaadin OSGi Demo");
 		titleLayout.addComponent(title);
 		SmallText description = new SmallText(
-		      "Select the \"Bundle View\" tab and activate/stop OSGi bundles dynamically.");
+				"Select the \"Bundle View\" tab and activate/stop OSGi bundles dynamically.");
 		description.setSizeUndefined();
 		titleLayout.addComponent(description);
 
@@ -177,15 +189,15 @@ public class MainApplication extends Application {
 			H2 title = new H2("Dynamic Vaadin OSGi Demo");
 			titleLayout.addComponent(title);
 			SmallText description = new SmallText(
-			      "<br>Copyright (c) Siemens AG, Kai Tödter and others.<br>"
-			            + "Licensed under Eclipse Public License (EPL).<br><br>"
-			            + "This software contains modules licenced under<br>"
-			            + " the Apache Software Foundation 2.0 license (ASF) and EPL<br><br>"
-			            + "Many thanks to Chris Brind, Neil Bartlett and<br>"
-			            + " Petter Holmström for their OSGi and Vaadin<br>"
-			            + " related work, blogs, and bundles.<br><br>"
-			            + "The icons are from the Silk icon set by Mark James<br>"
-			            + "<a href=\"http://www.famfamfam.com/lab/icons/silk/\">http://www.famfamfam.com/lab/icons/silk/</a>");
+					"<br>Copyright (c) Siemens AG, Kai Tödter and others.<br>"
+							+ "Licensed under Eclipse Public License (EPL).<br><br>"
+							+ "This software contains modules licenced under<br>"
+							+ " the Apache Software Foundation 2.0 license (ASF) and EPL<br><br>"
+							+ "Many thanks to Chris Brind, Neil Bartlett and<br>"
+							+ " Petter Holmström for their OSGi and Vaadin<br>"
+							+ " related work, blogs, and bundles.<br><br>"
+							+ "The icons are from the Silk icon set by Mark James<br>"
+							+ "<a href=\"http://www.famfamfam.com/lab/icons/silk/\">http://www.famfamfam.com/lab/icons/silk/</a>");
 			description.setSizeUndefined();
 			description.setContentMode(Label.CONTENT_XHTML);
 
@@ -210,9 +222,8 @@ public class MainApplication extends Application {
 		logger.debug("bindViewContribution()");
 		viewContributions.add(viewContribution);
 		if (initialized) {
-			tabSheet.addTab(viewContribution.getView(this),
-			      viewContribution.getName(),
-			      new ThemeResource(viewContribution.getIcon()));
+			tabSheet.addTab(viewContribution.getView(this), viewContribution.getName(), new ThemeResource(
+					viewContribution.getIcon()));
 		}
 	}
 
@@ -224,8 +235,7 @@ public class MainApplication extends Application {
 		}
 	}
 
-	public void bindActionContribution(
-	      final IActionContribution actionContribution) {
+	public void bindActionContribution(final IActionContribution actionContribution) {
 		logger.debug("bindActionContribution()");
 		if (initialized) {
 			addActionContribution(actionContribution);
@@ -233,8 +243,7 @@ public class MainApplication extends Application {
 		actionContributions.add(actionContribution);
 	}
 
-	private void addActionContribution(
-	      final IActionContribution actionContribution) {
+	private void addActionContribution(final IActionContribution actionContribution) {
 		final Application application = this;
 		Button button = new Button(actionContribution.getText());
 		button.setIcon(new ThemeResource(actionContribution.getIcon()));
@@ -250,13 +259,12 @@ public class MainApplication extends Application {
 		buttonActionMap.put(actionContribution, button);
 
 		@SuppressWarnings("serial")
-		MenuItem menuItem = actionMenu.addItem(actionContribution.getText(),
-		      new Command() {
-			      @Override
-			      public void menuSelected(MenuItem selectedItem) {
-				      actionContribution.execute(application);
-			      }
-		      });
+		MenuItem menuItem = actionMenu.addItem(actionContribution.getText(), new Command() {
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				actionContribution.execute(application);
+			}
+		});
 		menuItem.setIcon(new ThemeResource(actionContribution.getIcon()));
 		menuActionMap.put(actionContribution, menuItem);
 	}
