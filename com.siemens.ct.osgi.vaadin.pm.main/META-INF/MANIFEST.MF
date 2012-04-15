@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Vaadin OSGi Main
+Bundle-SymbolicName: com.siemens.ct.osgi.vaadin.pm.main
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: SIEMENS
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: com.vaadin;bundle-version="6.4.8"
+Service-Component: OSGI-INF/vaadinMain.xml
+Export-Package: com.siemens.ct.osgi.vaadin.pm.main.service
+Import-Package: org.slf4j;version="1.6.1"
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="com.siemens.ct.osgi.vaadin.pm.tableview">
+   <implementation class="com.siemens.ct.osgi.vaadin.pm.tableview.TableView"/>
+   <service>
+      <provide interface="com.siemens.ct.osgi.vaadin.pm.main.service.IViewContribution"/>
+   </service>
+   <reference bind="setPersonManager" cardinality="1..1" interface="com.siemens.ct.pm.model.IPersonManager" name="IPersonManager" policy="dynamic" unbind="removePersonManager"/>
+</scr:component>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: View
+Bundle-SymbolicName: com.siemens.ct.osgi.vaadin.pm.printaction
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: SIEMENS
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: com.siemens.ct.osgi.vaadin.pm.main;bundle-version="1.0.0",
+ com.vaadin;bundle-version="6.4.8"
+Service-Component: OSGI-INF/printAction.xml
+Import-Package: org.slf4j

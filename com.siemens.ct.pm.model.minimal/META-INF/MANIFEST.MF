@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Minimal PM Model
+Bundle-SymbolicName: com.siemens.ct.pm.model.minimal
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.siemens.ct.pm.model.minimal
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Service-Component: OSGI-INF/personManager.xml
+Import-Package: com.siemens.ct.pm.model,
+ com.siemens.ct.pm.model.event,
+ org.slf4j

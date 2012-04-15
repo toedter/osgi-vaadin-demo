@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="com.siemens.ct.osgi.vaadin.pm.main" factory='vaadin.app'>
+   <implementation class="com.siemens.ct.osgi.vaadin.pm.main.MainApplication"/>
+   <reference bind="bindViewContribution" cardinality="0..n" interface="com.siemens.ct.osgi.vaadin.pm.main.service.IViewContribution" name="IViewContribution" policy="dynamic" unbind="unbindViewContribution"/>
+   <reference bind="bindActionContribution" cardinality="0..n" interface="com.siemens.ct.osgi.vaadin.pm.main.service.IActionContribution" name="IActionContribution" policy="dynamic" unbind="unbindActionContribution"/>
+</scr:component>

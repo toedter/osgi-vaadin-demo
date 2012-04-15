@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<component name="com.siemens.ct.pm.model.minmalPersonManager">
+    <implementation
+        class="com.siemens.ct.pm.model.minimal.PersonManager"/>
+    <service>
+        <provide
+            interface="com.siemens.ct.pm.model.IPersonManager"/>
+    </service>
+    <reference name="PersonListener"
+        interface="com.siemens.ct.pm.model.IPersonListener"
+        bind="addPersonListener"
+        unbind="removePersonListener"
+        cardinality="0..n"
+        policy="dynamic"/>
+</component>

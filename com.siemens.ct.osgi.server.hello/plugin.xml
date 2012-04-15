@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <extension point="org.eclipse.equinox.http.registry.resources">
+    <resource
+      alias="/files"
+      base-name="/web_files"/>
+  </extension>
+  
+  <extension point="org.eclipse.equinox.http.registry.servlets">
+    <servlet
+      alias="/hello"
+      class="com.siemens.ct.osgi.server.hello.HelloServlet"/>
+  </extension>
+</plugin>
