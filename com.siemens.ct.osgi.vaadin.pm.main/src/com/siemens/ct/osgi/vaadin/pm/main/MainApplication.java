@@ -115,6 +115,8 @@ public class MainApplication extends Application {
 		// Add it to Application's main window
 		main.addComponent(indicator);
 		// Hide the component does not work...
+		indicator.setWidth("1px");
+		indicator.setHeight("1px");
 		indicator.setVisible(true);
 
 		initialized = true;
